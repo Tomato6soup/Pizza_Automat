@@ -9,6 +9,7 @@ namespace projekt31_10_24
      * poprawic szczezki do plikow
      * zamienic Console.Writeline w klasach oprocz Program.cs na string-i,
      * inni klasy nie mogą wyświetlać Console.Writeline
+     * linq dodać
      */
 
     public class Program
