@@ -16,7 +16,7 @@ namespace projekt31_10_24
             Skladniki skladniki = new Skladniki();
             Zamowienia zamowienia = new Zamowienia();
             List<Klient> klienci = Klient.WczytajKlientow();
-            // Wczytanie pizz z pliku zamowienia.json
+
             List<Pizza> pizze = Pizza.WczytajPizzeZPliku();
 
             if (pizze.Count == 0)

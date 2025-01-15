@@ -48,21 +48,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automat.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="Chujnia\Config.cs" />
     <Compile Include="Dodatki.cs" />
     <Compile Include="Klient.cs" />
     <Compile Include="Pizza.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Skladniki.cs" />
-    <Compile Include="Zamowienia.cs" />
+    <Compile Include="Chujnia\Zamowienia.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NewDirectory1\App.config" />
     <None Include="NewDirectory1\packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.txt" />
+    <Content Include="Caly projekt.txt" />
+    <Content Include="Chujnia\config.txt" />
     <Content Include="dodatki.json" />
     <Content Include="klienci.json" />
     <Content Include="pizzy.json" />
