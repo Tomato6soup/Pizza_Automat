@@ -1,0 +1,649 @@
+﻿[-------------pizzy.json
+  {
+    "NazwaPizzy": "Margaryta",
+    "CenaPizzy": 20.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 80,
+      "Ketchup": 50
+    }
+  },
+  {
+    "NazwaPizzy": "Hawai",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 80,
+      "Ketchup": 50,
+      "Ananas": 70
+    }
+  },
+  {
+    "NazwaPizzy": "Meat lover",
+    "CenaPizzy": 30.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 150,
+      "Pomidory": 100,
+      "Ketchup": 60,
+      "Kielbasa": 120,
+      "Boczek": 100
+    }
+  },
+  {
+    "NazwaPizzy": "Vege",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "S",
+    "ListaSkladnikow": {
+      "Pomidory": 70,
+      "Ketchup": 50,
+      "Bazylia": 30,
+      "Cukinia": 50
+    }
+  },
+  {
+    "NazwaPizzy": "Pepperoni",
+    "CenaPizzy": 28.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 120,
+      "Pomidory": 90,
+      "Ketchup": 50,
+      "Salami": 100
+    }
+  },
+  {
+    "NazwaPizzy": "Capricciosa",
+    "CenaPizzy": 27.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 130,
+      "Pomidory": 100,
+      "Szynka": 110,
+      "Pieczarki": 80
+    }
+  },
+  {
+    "NazwaPizzy": "Quattro Formaggi",
+    "CenaPizzy": 32.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Gorgonzola": 50,
+      "Parmezan": 50,
+      "Ricotta": 50
+    }
+  },
+  {
+    "NazwaPizzy": "Diavola",
+    "CenaPizzy": 29.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 90,
+      "Salami": 100,
+      "Papryczki chili": 40
+    }
+  },
+  {
+    "NazwaPizzy": "Frutti di Mare",
+    "CenaPizzy": 35.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 120,
+      "Pomidory": 100,
+      "Krewetki": 70,
+      "Małże": 70,
+      "Oliwki": 50
+    }
+  },
+  {
+    "NazwaPizzy": "Polska",
+    "CenaPizzy": 30.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 90,
+      "Ketchup": 50,
+      "Kielbasa": 100,
+      "Ogórki kiszone": 60
+    }
+  }
+]
+------------dodatki.json
+{
+  "Frytki": 1000,
+  "Sałatka": 5000,
+  "Sok": 3000,
+  "Cola": 4000,
+  "Woda": 2500
+}
+klienci.json(pusty)
+zamowienia.json(pusty)
+
+------------
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using System.Text;
+namespace projekt31_10_24
+{
+    public class Dodatki
+    {
+        public Dictionary<string, int> Frytki { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> Salatka { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> Napoje { get; set; } = new Dictionary<string, int>();
+
+        public Dodatki()
+        {
+            WczytajDodatkiZJson();
+        }
+
+        private void WczytajDodatkiZJson()
+        {
+            try
+            {
+                // Pobierz ścieżkę do pliku z config.txt
+             //   string sciezkaPliku = Config.PobierzSciezke("dodatki.json");
+
+                // Sprawdź, czy plik istnieje
+                if (File.Exists("dodatki.json"))
+                {
+                    string json = File.ReadAllText("dodatki.json");
+
+                    // Wczytaj dodatki z pliku JSON
+                    var dodatki = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+                    // Rozdziel dodatki na kategorie
+                    foreach (var dodatek in dodatki)
+                    {
+                        if (dodatek.Key.ToLower().Contains("frytki"))
+                        {
+                            Frytki[dodatek.Key] = dodatek.Value;
+                        }
+                        else if (dodatek.Key.ToLower().Contains("sałatka"))
+                        {
+                            Salatka[dodatek.Key] = dodatek.Value;
+                        }
+                        else
+                        {
+                            Napoje[dodatek.Key] = dodatek.Value;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Plik dodatki.json nie istnieje: {"dodatki.json"}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd podczas wczytywania dodatków: " + ex.Message);
+            }
+        }
+
+        public string WyswietlDodatki() ---> Automat
+        {
+            var wynik = new StringBuilder();
+
+            wynik.AppendLine("Dostępne dodatki:");
+
+            wynik.AppendLine("Frytki:");
+            foreach (var item in Frytki)
+                wynik.AppendLine($"- {item.Key}: {item.Value}g");
+
+            wynik.AppendLine("\nSałatka:");
+            foreach (var item in Salatka)
+                wynik.AppendLine($"- {item.Key}: {item.Value}g");
+
+            wynik.AppendLine("\nNapoje:");
+            foreach (var item in Napoje)
+                wynik.AppendLine($"- {item.Key}: {item.Value}ml");
+
+            return wynik.ToString();
+        }
+
+        public bool ZamowDodatek(string nazwa, int ilosc) ---> Automat
+        {
+            if (Frytki.ContainsKey(nazwa) && Frytki[nazwa] >= ilosc)
+            {
+                Frytki[nazwa] -= ilosc;
+                return true;
+            }
+            else if (Salatka.ContainsKey(nazwa) && Salatka[nazwa] >= ilosc)
+            {
+                Salatka[nazwa] -= ilosc;
+                return true;
+            }
+            else if (Napoje.ContainsKey(nazwa) && Napoje[nazwa] >= ilosc)
+            {
+                Napoje[nazwa] -= ilosc;
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"Brak wystarczającej ilości dodatku {nazwa} lub dodatek nie istnieje.");
+                return false;
+            }
+        }
+    }
+
+}
+
+---------------
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+// scalic dwie klasy w jeden - Automat(opcja zamow pizze, ilosc pizz, czas przygotowania, historia zamowien, wyswietl liste klientowaa)
+namespace projekt31_10_24
+{
+    public class Automat
+    
+    {
+        private Dodatki dodatki = new Dodatki(); // Instancja klasy Dodatki
+
+        public bool ZamowDodatek(string nazwa, int ilosc)
+        {
+            return dodatki.ZamowDodatek(nazwa, ilosc); // Wywołanie metody na instancji
+        }
+        public int IlePizzyZostalo = 10;
+        private Skladniki skladniki = new Skladniki();
+        public List<Zamowienia> zamowienia = new List<Zamowienia>();
+
+        public void WybierzPizze(Pizza pizza)
+        {
+            Console.WriteLine("Wybrana pizza: " + pizza.NazwaPizzy);
+            zamowienia.Add(new Zamowienia { Pizza = pizza});
+            ZrobPizze(pizza);
+        }
+        public void ZrobPizze(Pizza pizza)
+        {
+            Console.WriteLine("Przygotowuję pizzę: " + pizza.NazwaPizzy);
+            IlePizzyZostalo--;
+            Console.WriteLine("Pizza gotowa!");
+            Console.WriteLine();
+        }
+
+        public void PokazDostepneSkladniki()
+        {
+            skladniki.PokazInfo();
+        }
+        //------------Dodano nowe
+        public void PokazHistorieZamowien()
+        {
+            Console.WriteLine("Historia zamowien: ");
+            foreach (var zamowienie in zamowienia)
+            {
+                Console.WriteLine("Pizza: " + zamowienie.Pizza.NazwaPizzy);
+            }
+
+        }
+        //-------------------
+        
+    }
+    public class Zamowienia
+
+    {
+        public Pizza Pizza { get; set; }
+        public List<Pizza> pizzas = new List<Pizza>();
+        public string plikSciezka = "pizzy.json";
+
+        public void DodajPizze(Pizza pizza)
+        {
+            pizzas.Add(pizza);
+            ZapiszDoPliku(pizza);
+            Console.WriteLine("Dodano pizzę: " + pizza.NazwaPizzy);
+            //--
+            Console.WriteLine("Data zamowienia: " + DateTime.Now);
+            //--
+        }
+        //LINQ pytania potem bedzie
+        private void ZapiszDoPliku(Pizza pizza)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(plikSciezka, true))
+                {
+                    writer.WriteLine($"Pizza: {pizza.NazwaPizzy}, Cena: {pizza.CenaPizzy} zł, Rozmiar: {pizza.RozmiarPizzy}, Data zamówienia: {DateTime.Now}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Błąd przy zapisywaniu do pliku: " + e.Message);
+            }
+        }
+        // Metoda odczytująca wszystkie zamówienia z pliku
+        public void WyswietlZapisaneZamowienia()
+        {
+            try
+            {
+                if (File.Exists(plikSciezka))
+                {
+                    Console.WriteLine("Zapisane zamówienia:");
+                    string[] lines = File.ReadAllLines(plikSciezka);
+                    foreach (string line in lines)
+                    {
+                        Console.WriteLine(line);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Brak zapisanych zamówień.");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Błąd przy odczycie z pliku: " + e.Message);
+            }
+        }
+        /*
+        // Metoda wyświetlająca liczbę pizz każdego rodzaju
+        public void WyswietlLiczbePizz()
+        {
+            var liczbaPizz = pizzas
+                .GroupBy(p => p.NazwaPizzy)
+                .Select(g => new { Nazwa = g.Key, Ilosc = g.Count() });
+
+            Console.WriteLine("Liczba pizz każdego rodzaju:");
+            foreach (var p in liczbaPizz)
+            {
+                Console.WriteLine($"- {p.Nazwa}: {p.Ilosc}");
+            }
+        }
+
+        // Metoda wyświetlająca średni czas przygotowania każdej pizzy
+        public void WyswietlSredniCzasPrzygotowania()
+        {
+            var czasPrzygotowania = pizzas
+                .GroupBy(p => p.NazwaPizzy)
+                .Select(g => new { Nazwa = g.Key, SredniCzas = g.Average(p => p.CzasPrzygotowania()) });
+
+            Console.WriteLine("Średni czas przygotowania każdego rodzaju pizzy:");
+            foreach (var p in czasPrzygotowania)
+            {
+                Console.WriteLine($"- {p.Nazwa}: {p.SredniCzas} minut");
+            }
+        }
+        public void ZapiszZamowieniaDoJson()
+        {
+            string json = JsonConvert.SerializeObject(pizzas, Formatting.Indented);
+            File.WriteAllText("zamowienia.json", json);
+        }
+        */
+        public void WczytajZamowieniaZJson()
+        {
+            if (File.Exists("zamowienia.json"))
+            {
+                string json = File.ReadAllText("zamowienia.json");
+                pizzas = JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
+            }
+        }
+
+
+    }
+---------------
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+namespace projekt31_10_24
+{
+    
+    public class Klient
+    {
+        public int KlientID { get; set; }
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+
+        public Klient(int klientID, string imie, string nazwisko)
+        {
+            KlientID = klientID;
+            Imie = imie;
+            Nazwisko = nazwisko;
+        }
+
+        public static List<Klient> WczytajKlientow()
+        {
+           // string sciezka = Config.PobierzSciezke("klienci.json");
+            if (File.Exists("klienci.json"))
+            {
+                string json = File.ReadAllText("klienci.json");
+                return JsonConvert.DeserializeObject<List<Klient>>(json) ?? new List<Klient>();
+            }
+            return new List<Klient>();
+        }
+
+        public static void ZapiszKlientow(List<Klient> klienci)
+        {
+            string json = JsonConvert.SerializeObject(klienci, Formatting.Indented);
+            File.WriteAllText("klienci.json", json);
+        }
+
+        public void WyswietlInformacje()
+        {
+            Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}");
+        }
+
+        public void DodajZamowienie(Zamowienia zamowienia, Pizza pizza) ---> za pomocą Automat(może dziedzicienie?)
+        {
+            Console.WriteLine($"Dodawanie zamówienia dla klienta: {Imie} {Nazwisko}");
+            zamowienia.DodajPizze(pizza);
+        }
+    }
+
+}
+--------------
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+using System;
+//dopasowac menu 
+namespace projekt31_10_24
+{
+
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+           /// Config.Config1();
+            Automat automat = new Automat();
+            Dodatki dodatki = new Dodatki();
+            Skladniki skladniki = new Skladniki();
+            Zamowienia zamowienia = new Zamowienia();
+            List<Klient> klienci = Klient.WczytajKlientow();
+            // Wczytanie pizz z pliku zamowienia.json
+            List<Pizza> pizze = Pizza.WczytajPizzeZPliku();
+
+            if (pizze.Count == 0)
+            {
+                Console.WriteLine("Brak dostępnych pizz");
+                return;
+            }
+
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("=== MENU ===");
+                Console.WriteLine("1. Dodaj klienta");
+                Console.WriteLine("2. Zamów pizzę");
+                Console.WriteLine("3. Wybierz dodatek");
+                Console.WriteLine("4. Wyświetl dostępne składniki");
+                Console.WriteLine("5. Wyświetl historię zamówień");
+                Console.WriteLine("6. Wyjdź");
+                Console.Write("Wybierz opcję: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.Write("Podaj imię klienta: ");
+                        string imie = Console.ReadLine();
+                        Console.Write("Podaj nazwisko klienta: ");
+                        //jeszcze dodac opcje podaj ID klienta
+                        string nazwisko = Console.ReadLine();
+                        Klient nowyKlient = new Klient(klienci.Count + 1, imie, nazwisko);
+                        klienci.Add(nowyKlient);
+                        Klient.ZapiszKlientow(klienci);
+                        break;
+                    case "2":
+                        Console.Write("Podaj ID klienta: ");
+                        int klientID = int.Parse(Console.ReadLine());
+                        Klient klient = klienci.Find(k => k.KlientID == klientID);
+                        if (klient != null)
+                        {
+                            //Dodać wybór pizzy z pizzy.json
+                            Pizza.WyswietlDostepnePizze(pizze);
+                            Pizza wybranaPizza = Pizza.WybierzPizza(pizze);
+                            Console.WriteLine($"\nWybrałeś pizzę: {wybranaPizza.NazwaPizzy}");
+                            Console.WriteLine($"Cena: {wybranaPizza.CenaPizzy} PLN");
+                            Console.WriteLine($"Czas przygotowania: {wybranaPizza.CzasPrzygotowania()} minut");
+                            
+                            zamowienia.ZapiszZamowieniaDoJson();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Nie znaleziono klienta.");
+                        }
+                        break;
+                    case "3":
+                        dodatki.WyswietlDodatki();
+                        Console.Write("Wybierz dodatek: ");
+                        string dodatek = Console.ReadLine();
+                        Console.Write("Podaj ilość: ");
+                        int ilosc = int.Parse(Console.ReadLine());
+                        dodatki.ZamowDodatek(dodatek, ilosc);
+                        break;
+                    case "4":
+                        skladniki.PokazInfo();
+                        break;
+                    case "5":
+                        Console.WriteLine("=== HISTORIA ZAMÓWIEŃ ===");
+                        foreach (var klientZam in klienci)
+                        {
+                            klientZam.WyswietlInformacje();
+                            zamowienia.WyswietlZapisaneZamowienia();
+                        }
+                        break;
+                    case "6":
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Nieprawidłowa opcja.");
+                        break;
+                }
+            }
+        }
+    }
+
+}
+--------------------
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace projekt31_10_24
+{
+    public class Skladniki
+    {
+        public Dictionary<string, int> ListaSkladnikow = new Dictionary<string, int>();
+
+        public Skladniki()
+        {
+            WczytajSkladnikiZJson();
+        }
+       
+        private void WczytajSkladnikiZJson()
+        {
+            
+            if (File.Exists("skladniki.json"))
+            {
+                string json = File.ReadAllText("skladniki.json");
+                ListaSkladnikow = JsonConvert.DeserializeObject<Dictionary<string, int>>(json) ?? new Dictionary<string, int>();
+           }
+            else
+            {
+                Console.WriteLine("Plik składników nie istnieje.");
+            }
+           
+        }
+        public void PokazInfo()
+        {
+            Console.WriteLine("Dostępne składniki:");
+            foreach (var skladnik in ListaSkladnikow)
+            {
+                Console.WriteLine("- " + skladnik.Key + ": " + skladnik.Value + "g");
+            }
+
+            Console.WriteLine();
+        }
+
+        public bool ZuzyjSkladnik(string nazwa, int ilosc)
+        {
+            if (ListaSkladnikow.ContainsKey(nazwa) && ListaSkladnikow[nazwa] >= ilosc)
+            {
+                ListaSkladnikow[nazwa] -= ilosc;
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Brak wystarczającej ilości składnika: " + nazwa);
+                return false;
+            }
+        }
+
+    }
+}
+----------------
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+namespace projekt31_10_24
+{
+    public class Pizza
+    {
+       //W tej klasie wyswietla sie listy z pizz, wyswietla pizzy, cene, ich skladniki, (ilosc kazdej pizzy --> Automat)
+
+        // Wczytywanie pizz z pliku zamowienia.json
+        public static List<Pizza> WczytajPizzeZPliku()
+        {
+            string sciezkaPliku = "pizzy.json"; // Ścieżka do pliku
+            if (File.Exists(sciezkaPliku))
+            {
+                string json = File.ReadAllText(sciezkaPliku);
+                return JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
+            }
+            else
+            {
+                Console.WriteLine($"Plik {sciezkaPliku} nie istnieje.");
+                return new List<Pizza>();
+            }
+        }
+
+        // Wyświetlanie listy pizz
+        public static void WyswietlDostepnePizze(List<Pizza> pizze)
+        {
+            Console.WriteLine("Dostępne pizze:");
+            for (int i = 0; i < pizze.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {pizze[i].NazwaPizzy} - {pizze[i].CenaPizzy} PLN");
+                Console.WriteLine($"   Rozmiar: {pizze[i].RozmiarPizzy}");
+                Console.WriteLine($"   Składniki: {string.Join(", ", pizze[i].ListaSkladnikow)}");
+            }
+        }
+
+     
+        }
+    }
+
+
+

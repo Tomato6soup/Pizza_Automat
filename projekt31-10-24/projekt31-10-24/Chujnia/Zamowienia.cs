@@ -10,7 +10,7 @@ namespace projekt31_10_24
     {
         public Pizza Pizza { get; set; }
         public List<Pizza> pizzas = new List<Pizza>();
-        public string plikSciezka = "pizzy.json";
+        public string plikSciezka = "zamowienia.json";
 
         public void DodajPizze(Pizza pizza)
         {
@@ -60,7 +60,7 @@ namespace projekt31_10_24
                 Console.WriteLine("Błąd przy odczycie z pliku: " + e.Message);
             }
         }
-
+        /*
         // Metoda wyświetlająca liczbę pizz każdego rodzaju
         public void WyswietlLiczbePizz()
         {
@@ -93,7 +93,7 @@ namespace projekt31_10_24
             string json = JsonConvert.SerializeObject(pizzas, Formatting.Indented);
             File.WriteAllText("zamowienia.json", json);
         }
-
+        */
         public void WczytajZamowieniaZJson()
         {
             if (File.Exists("zamowienia.json"))

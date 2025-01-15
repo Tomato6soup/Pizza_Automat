@@ -44,6 +44,7 @@ namespace projekt31_10_24
                         Console.Write("Podaj imię klienta: ");
                         string imie = Console.ReadLine();
                         Console.Write("Podaj nazwisko klienta: ");
+                        //jeszcze dodac opcje podaj ID klienta
                         string nazwisko = Console.ReadLine();
                         Klient nowyKlient = new Klient(klienci.Count + 1, imie, nazwisko);
                         klienci.Add(nowyKlient);

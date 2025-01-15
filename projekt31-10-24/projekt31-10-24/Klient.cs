@@ -40,7 +40,7 @@ namespace projekt31_10_24
             Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}");
         }
 
-        public void DodajZamowienie(Zamowienia zamowienia, Pizza pizza)
+        public void DodajZamowienie(Zamowienia zamowienia, Pizza pizza) 
         {
             Console.WriteLine($"Dodawanie zamówienia dla klienta: {Imie} {Nazwisko}");
             zamowienia.DodajPizze(pizza);

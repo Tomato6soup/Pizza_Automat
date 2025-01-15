@@ -6,12 +6,12 @@ namespace projekt31_10_24
 {
     public class Pizza
     {
-       //W tej klasie wyswietla sie ilość pizzy, listy z pizz, wyswietla pizzy, cene, ich skladnikow
+       //W tej klasie wyswietla sie listy z pizz, wyswietla pizzy, cene, ich skladnikow
 
         // Wczytywanie pizz z pliku zamowienia.json
         public static List<Pizza> WczytajPizzeZPliku()
         {
-            string sciezkaPliku = "zamowienia.json"; // Ścieżka do pliku
+            string sciezkaPliku = "pizzy.json"; // Ścieżka do pliku
             if (File.Exists(sciezkaPliku))
             {
                 string json = File.ReadAllText(sciezkaPliku);
