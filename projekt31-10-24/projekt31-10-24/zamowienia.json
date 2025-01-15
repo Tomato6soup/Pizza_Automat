@@ -8,5 +8,38 @@
       "Pomidory",
       "Ketchup"
     ]
+  },
+  {
+    "NazwaPizzy": "Hawai",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": [
+      "Mozzarella",
+      "Pomidory",
+      "Ketchup",
+      "Ananas"
+    ]
+  },
+  {
+    "NazwaPizzy": "Meat lover",
+    "CenaPizzy": 30.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": [
+      "Mozzarella",
+      "Pomidory",
+      "Ketchup",
+      "Kiełbasa"
+    ]
+  },
+  {
+    "NazwaPizzy": "Vege",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": [
+     
+      "Pomidory",
+      "Ketchup",
+      "Basylia"
+    ]
   }
 ]

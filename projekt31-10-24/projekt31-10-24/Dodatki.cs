@@ -1,38 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
+using Newtonsoft.Json;
+using System.Text;
 namespace projekt31_10_24
 {
     public class Dodatki
     {
-        public Dictionary<string, int> Frytki { get; set; }
-        public Dictionary<string, int> Salatka { get; set; }
-        public Dictionary<string, int> Napoje { get; set; }
+        public Dictionary<string, int> Frytki { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> Salatka { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> Napoje { get; set; } = new Dictionary<string, int>();
 
-        //też zrobić przez json plik, wyczytamy z dodatki.json-----------
         public Dodatki()
         {
-            Frytki = new Dictionary<string, int> { { "Frytki", 1000 } }; // w gramach
-            Salatka = new Dictionary<string, int> { { "Sałatka", 5000 } }; // w gramach
-            Napoje = new Dictionary<string, int> { { "Sok", 3000 }, { "Cola", 4000 }, { "Woda", 2500 } }; // w mililitrach
+            WczytajDodatkiZJson();
         }
-        public void WyswietlDodatki()
+
+        private void WczytajDodatkiZJson()
         {
-            //zwracamy string, wyswietlic w program.cs, return string
-            Console.WriteLine("Dostępne dodatki:");
+            try
+            {
+                // Pobierz ścieżkę do pliku z config.txt
+                string sciezkaPliku = Config.PobierzSciezke("dodatki.json");
 
-            Console.WriteLine("Frytki:");
+                // Sprawdź, czy plik istnieje
+                if (File.Exists(sciezkaPliku))
+                {
+                    string json = File.ReadAllText(sciezkaPliku);
+
+                    // Wczytaj dodatki z pliku JSON
+                    var dodatki = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+                    // Rozdziel dodatki na kategorie
+                    foreach (var dodatek in dodatki)
+                    {
+                        if (dodatek.Key.ToLower().Contains("frytki"))
+                        {
+                            Frytki[dodatek.Key] = dodatek.Value;
+                        }
+                        else if (dodatek.Key.ToLower().Contains("sałatka"))
+                        {
+                            Salatka[dodatek.Key] = dodatek.Value;
+                        }
+                        else
+                        {
+                            Napoje[dodatek.Key] = dodatek.Value;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Plik dodatki.json nie istnieje: {sciezkaPliku}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Błąd podczas wczytywania dodatków: " + ex.Message);
+            }
+        }
+
+        public string WyswietlDodatki()
+        {
+            var wynik = new StringBuilder();
+
+            wynik.AppendLine("Dostępne dodatki:");
+
+            wynik.AppendLine("Frytki:");
             foreach (var item in Frytki)
-                Console.WriteLine($"- {item.Key}: {item.Value}g");
+                wynik.AppendLine($"- {item.Key}: {item.Value}g");
 
-            Console.WriteLine("\nSałatka:");
+            wynik.AppendLine("\nSałatka:");
             foreach (var item in Salatka)
-                Console.WriteLine($"- {item.Key}: {item.Value}g");
+                wynik.AppendLine($"- {item.Key}: {item.Value}g");
 
-            Console.WriteLine("\nNapoje:");
+            wynik.AppendLine("\nNapoje:");
             foreach (var item in Napoje)
-                Console.WriteLine($"- {item.Key}: {item.Value}ml");
-            Console.WriteLine();
+                wynik.AppendLine($"- {item.Key}: {item.Value}ml");
+
+            return wynik.ToString();
         }
 
         public bool ZamowDodatek(string nazwa, int ilosc)
@@ -58,7 +103,6 @@ namespace projekt31_10_24
                 return false;
             }
         }
-
     }
 
 }
