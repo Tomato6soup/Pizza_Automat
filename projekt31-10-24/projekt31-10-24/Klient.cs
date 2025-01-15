@@ -20,10 +20,10 @@ namespace projekt31_10_24
 
         public static List<Klient> WczytajKlientow()
         {
-            string sciezka = Config.PobierzSciezke("klienci.json");
-            if (File.Exists(sciezka))
+           // string sciezka = Config.PobierzSciezke("klienci.json");
+            if (File.Exists("klienci.json"))
             {
-                string json = File.ReadAllText(sciezka);
+                string json = File.ReadAllText("klienci.json");
                 return JsonConvert.DeserializeObject<List<Klient>>(json) ?? new List<Klient>();
             }
             return new List<Klient>();
@@ -32,7 +32,7 @@ namespace projekt31_10_24
         public static void ZapiszKlientow(List<Klient> klienci)
         {
             string json = JsonConvert.SerializeObject(klienci, Formatting.Indented);
-            File.WriteAllText(Config.PobierzSciezke("klienci.json"), json);
+            File.WriteAllText("klienci.json", json);
         }
 
         public void WyswietlInformacje()

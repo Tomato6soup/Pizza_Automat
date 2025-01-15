@@ -5,23 +5,25 @@ using System;
 
 namespace projekt31_10_24
 {
-    /*
-     * poprawic szczezki do plikow
-     * zamienic Console.Writeline w klasach oprocz Program.cs na string-i,
-     * inni klasy nie mogą wyświetlać Console.Writeline
-     * linq dodać
-     */
 
     public class Program
     {
         static void Main(string[] args)
         {
-            Config.Config1();
+           /// Config.Config1();
             Automat automat = new Automat();
             Dodatki dodatki = new Dodatki();
             Skladniki skladniki = new Skladniki();
             Zamowienia zamowienia = new Zamowienia();
             List<Klient> klienci = Klient.WczytajKlientow();
+            // Wczytanie pizz z pliku zamowienia.json
+            List<Pizza> pizze = Pizza.WczytajPizzeZPliku();
+
+            if (pizze.Count == 0)
+            {
+                Console.WriteLine("Brak dostępnych pizz w pliku zamowienia.json.");
+                return;
+            }
 
             bool exit = false;
             while (!exit)
@@ -53,8 +55,13 @@ namespace projekt31_10_24
                         Klient klient = klienci.Find(k => k.KlientID == klientID);
                         if (klient != null)
                         {
-                            Pizza pizza = Pizza.Margaryta(); 
-                            klient.DodajZamowienie(zamowienia, pizza);
+                            //Dodać wybór pizzy z zamówienia.json
+                            Pizza.WyswietlDostepnePizze(pizze);
+                            Pizza wybranaPizza = Pizza.WybierzPizza(pizze);
+                            Console.WriteLine($"\nWybrałeś pizzę: {wybranaPizza.NazwaPizzy}");
+                            Console.WriteLine($"Cena: {wybranaPizza.CenaPizzy} PLN");
+                            Console.WriteLine($"Czas przygotowania: {wybranaPizza.CzasPrzygotowania()} minut");
+                            
                             zamowienia.ZapiszZamowieniaDoJson();
                         }
                         else

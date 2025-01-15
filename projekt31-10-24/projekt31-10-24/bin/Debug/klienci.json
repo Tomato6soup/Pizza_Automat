@@ -3,5 +3,10 @@
     "KlientID": 1,
     "Imie": "Amm",
     "Nazwisko": "Mmmm"
+  },
+  {
+    "KlientID": 2,
+    "Imie": "Anna",
+    "Nazwisko": "Pupulko"
   }
 ]

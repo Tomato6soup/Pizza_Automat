@@ -6,59 +6,39 @@ namespace projekt31_10_24
 {
     public class Pizza
     {
-        public string NazwaPizzy;
-        public double CenaPizzy;
-        public char RozmiarPizzy;
-        public List<string> ListaSkladnikow;
-        public Pizza(string nazwa, double cena, char rozmiar, List<string> skladniki)
-        {
-            NazwaPizzy = nazwa;
-            CenaPizzy = cena;
-            RozmiarPizzy = rozmiar;
-            ListaSkladnikow = skladniki;
-        }
-// podajemy pizzy z pliku pizzy.json
-        public static Pizza Margaryta()
-        {
-            return new Pizza("Margaryta", 20, 'M', new List<string> { "Mozzarella", "Pomidory", "Ketchup" });
-        }
-        public static Pizza Pepperoni()
-        {
-            return new Pizza("Pepperoni", 25, 'L', new List<string> { "Mozzarella", "Kielbasa", "Ketchup" });
-        }
-        public int CzasPrzygotowania()
-        {
-            return 10 + ListaSkladnikow.Count * 2; // Czas podstawowy + czas na składniki
-        }
-        /*
-        public void WyswietlInformacje()
-        {
-            Console.WriteLine("Pizza: " + NazwaPizzy);
-            Console.WriteLine("Cena: " + CenaPizzy + " zł");
-            Console.WriteLine("Rozmiar: " + RozmiarPizzy);
-            Console.WriteLine("Składniki: " + string.Join(", ", ListaSkladnikow));
-            Console.WriteLine("Czas przygotowania: " + CzasPrzygotowania() + " minut\n");
-        }*/
-        public static void ZapiszStandardowePizze()
-        {
-            var standardowePizze = new List<Pizza>
-            {
-                Margaryta(),
-                Pepperoni()
-            };
-            string json = JsonConvert.SerializeObject(standardowePizze, Formatting.Indented);
-            File.WriteAllText("pizzy.json", json);
-        }
+       //W tej klasie wyswietla sie ilość pizzy, listy z pizz, wyswietla pizzy, cene, ich skladnikow
 
-        public static List<Pizza> WczytajStandardowePizze()
+        // Wczytywanie pizz z pliku zamowienia.json
+        public static List<Pizza> WczytajPizzeZPliku()
         {
-            if (File.Exists("pizzy.json"))
+            string sciezkaPliku = "zamowienia.json"; // Ścieżka do pliku
+            if (File.Exists(sciezkaPliku))
             {
-                string json = File.ReadAllText("pizzy.json");
+                string json = File.ReadAllText(sciezkaPliku);
                 return JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
             }
-            return new List<Pizza>();
+            else
+            {
+                Console.WriteLine($"Plik {sciezkaPliku} nie istnieje.");
+                return new List<Pizza>();
+            }
+        }
+
+        // Wyświetlanie listy pizz
+        public static void WyswietlDostepnePizze(List<Pizza> pizze)
+        {
+            Console.WriteLine("Dostępne pizze:");
+            for (int i = 0; i < pizze.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {pizze[i].NazwaPizzy} - {pizze[i].CenaPizzy} PLN");
+                Console.WriteLine($"   Rozmiar: {pizze[i].RozmiarPizzy}");
+                Console.WriteLine($"   Składniki: {string.Join(", ", pizze[i].ListaSkladnikow)}");
+            }
+        }
+
+     
         }
     }
-}
+
+
 

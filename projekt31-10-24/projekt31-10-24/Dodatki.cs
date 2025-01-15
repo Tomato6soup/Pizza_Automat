@@ -21,12 +21,12 @@ namespace projekt31_10_24
             try
             {
                 // Pobierz ścieżkę do pliku z config.txt
-                string sciezkaPliku = Config.PobierzSciezke("dodatki.json");
+             //   string sciezkaPliku = Config.PobierzSciezke("dodatki.json");
 
                 // Sprawdź, czy plik istnieje
-                if (File.Exists(sciezkaPliku))
+                if (File.Exists("dodatki.json"))
                 {
-                    string json = File.ReadAllText(sciezkaPliku);
+                    string json = File.ReadAllText("dodatki.json");
 
                     // Wczytaj dodatki z pliku JSON
                     var dodatki = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
@@ -50,7 +50,7 @@ namespace projekt31_10_24
                 }
                 else
                 {
-                    Console.WriteLine($"Plik dodatki.json nie istnieje: {sciezkaPliku}");
+                    Console.WriteLine($"Plik dodatki.json nie istnieje: {"dodatki.json"}");
                 }
             }
             catch (Exception ex)
