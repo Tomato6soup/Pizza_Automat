@@ -1,0 +1,6 @@
+skladniki.json=D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\skladniki.json
+dodatki.json=D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\dodatki.json
+pizzy.json=D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\pizzy.json
+zamowienia.json=D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\zamowienia.json
+klienci.json=D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\klienci.json
+

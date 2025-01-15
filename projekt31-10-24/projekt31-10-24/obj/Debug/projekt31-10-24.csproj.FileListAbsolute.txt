@@ -1,0 +1,10 @@
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\obj\Debug\projekt31-10-24.csproj.AssemblyReference.cache
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\obj\Debug\projekt31-10-24.csproj.CoreCompileInputs.cache
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\bin\Debug\projekt31-10-24.exe.config
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\bin\Debug\projekt31-10-24.exe
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\bin\Debug\projekt31-10-24.pdb
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\obj\Debug\projekt31-10-24.exe
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\obj\Debug\projekt31-10-24.pdb
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\bin\Debug\Newtonsoft.Json.dll
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\bin\Debug\Newtonsoft.Json.xml
+D:\Programowanie(C++,HTML)\projekt31-10-24\projekt31-10-24\obj\Debug\projekt31-10-24.csproj.CopyComplete

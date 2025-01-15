@@ -1,0 +1,94 @@
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+using System;
+
+namespace projekt31_10_24
+{
+    /*
+     * poprawic szczezki do plikow
+     * zamienic Console.Writeline w klasach oprocz Program.cs na string-i,
+     * inni klasy nie mogą wyświetlać Console.Writeline
+     */
+
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            Config.Config1();
+            Automat automat = new Automat();
+            Dodatki dodatki = new Dodatki();
+            Skladniki skladniki = new Skladniki();
+            Zamowienia zamowienia = new Zamowienia();
+            List<Klient> klienci = Klient.WczytajKlientow();
+
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("=== MENU ===");
+                Console.WriteLine("1. Dodaj klienta");
+                Console.WriteLine("2. Zamów pizzę");
+                Console.WriteLine("3. Wybierz dodatek");
+                Console.WriteLine("4. Wyświetl dostępne składniki");
+                Console.WriteLine("5. Wyświetl historię zamówień");
+                Console.WriteLine("6. Wyjdź");
+                Console.Write("Wybierz opcję: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.Write("Podaj imię klienta: ");
+                        string imie = Console.ReadLine();
+                        Console.Write("Podaj nazwisko klienta: ");
+                        string nazwisko = Console.ReadLine();
+                        Klient nowyKlient = new Klient(klienci.Count + 1, imie, nazwisko);
+                        klienci.Add(nowyKlient);
+                        Klient.ZapiszKlientow(klienci);
+                        break;
+                    case "2":
+                        Console.Write("Podaj ID klienta: ");
+                        int klientID = int.Parse(Console.ReadLine());
+                        Klient klient = klienci.Find(k => k.KlientID == klientID);
+                        if (klient != null)
+                        {
+                            Pizza pizza = Pizza.Margaryta(); 
+                            klient.DodajZamowienie(zamowienia, pizza);
+                            zamowienia.ZapiszZamowieniaDoJson();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Nie znaleziono klienta.");
+                        }
+                        break;
+                    case "3":
+                        dodatki.WyswietlDodatki();
+                        Console.Write("Wybierz dodatek: ");
+                        string dodatek = Console.ReadLine();
+                        Console.Write("Podaj ilość: ");
+                        int ilosc = int.Parse(Console.ReadLine());
+                        dodatki.ZamowDodatek(dodatek, ilosc);
+                        break;
+                    case "4":
+                        skladniki.PokazInfo();
+                        break;
+                    case "5":
+                        Console.WriteLine("=== HISTORIA ZAMÓWIEŃ ===");
+                        foreach (var klientZam in klienci)
+                        {
+                            klientZam.WyswietlInformacje();
+                            zamowienia.WyswietlZapisaneZamowienia();
+                        }
+                        break;
+                    case "6":
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Nieprawidłowa opcja.");
+                        break;
+                }
+            }
+        }
+    }
+
+}
