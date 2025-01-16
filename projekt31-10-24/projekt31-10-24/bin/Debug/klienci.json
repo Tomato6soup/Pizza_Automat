@@ -2,11 +2,37 @@
   {
     "KlientID": 1,
     "Imie": "Amm",
-    "Nazwisko": "Mmmm"
+    "Nazwisko": "Mmmm",
+    "SumaZamowien": 0.0
   },
   {
     "KlientID": 2,
     "Imie": "Anna",
-    "Nazwisko": "Pupulko"
+    "Nazwisko": "Tkach",
+    "SumaZamowien": 47.0
+  },
+  {
+    "KlientID": 3,
+    "Imie": "Anna",
+    "Nazwisko": "Tkach",
+    "SumaZamowien": 0.0
+  },
+  {
+    "KlientID": 4,
+    "Imie": "Maciek ",
+    "Nazwisko": "Kotek",
+    "SumaZamowien": 0.0
+  },
+  {
+    "KlientID": 5,
+    "Imie": "Big ",
+    "Nazwisko": "Boos",
+    "SumaZamowien": 193.0
+  },
+  {
+    "KlientID": 6,
+    "Imie": "Masha",
+    "Nazwisko": "Gugr",
+    "SumaZamowien": 0.0
   }
 ]

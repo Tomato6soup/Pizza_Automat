@@ -1,7 +1,22 @@
 {
-  "Frytki": 1000,
-  "Sałatka": 5000,
-  "Sok": 3000,
-  "Cola": 4000,
-  "Woda": 2500
+  "Frytki": {
+    "Ilosc": 1000,
+    "CenaZaJednostke": 0.05
+  },
+  "Sałatka": {
+    "Ilosc": 5000,
+    "CenaZaJednostke": 0.02
+  },
+  "Sok": {
+    "Ilosc": 3000,
+    "CenaZaJednostke": 0.03
+  },
+  "Cola": {
+    "Ilosc": 4000,
+    "CenaZaJednostke": 0.04
+  },
+  "Woda": {
+    "Ilosc": 2500,
+    "CenaZaJednostke": 0.01
+  }
 }

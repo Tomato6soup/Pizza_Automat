@@ -13,14 +13,28 @@ namespace projekt31_10_24
 
         public static List<Pizza> WczytajPizzeZPliku()
         {
-            string sciezka = "pizzy.json";
-            if (File.Exists(sciezka))
+            string sciezkaPliku = "pizzy.json";
+            if (File.Exists(sciezkaPliku))
             {
-                string json = File.ReadAllText(sciezka);
-                return JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
+                try
+                {
+                    string json = File.ReadAllText(sciezkaPliku);
+                    return JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
+                }
+                catch (JsonReaderException ex)
+                {
+                    Console.WriteLine($"Błąd odczytu JSON w pliku {sciezkaPliku}: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Nieoczekiwany błąd: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Plik {sciezkaPliku} nie istnieje.");
             }
 
-            Console.WriteLine($"Plik {sciezka} nie istnieje.");
             return new List<Pizza>();
         }
 

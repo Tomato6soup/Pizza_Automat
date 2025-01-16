@@ -9,12 +9,14 @@ namespace projekt31_10_24
         public int KlientID { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
+        public double SumaZamowien { get; set; } // Dodano pole do przechowywania sumy zamówień
 
         public Klient(int klientID, string imie, string nazwisko)
         {
             KlientID = klientID;
             Imie = imie;
             Nazwisko = nazwisko;
+            SumaZamowien = 0;
         }
 
         public static List<Klient> WczytajKlientow()
@@ -37,7 +39,7 @@ namespace projekt31_10_24
 
         public void WyswietlInformacje()
         {
-            Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}");
+            Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}, Suma zamówień: {SumaZamowien} PLN");
         }
 
         public void DodajZamowienie(Pizza pizza, List<Pizza> historiaZamowien)

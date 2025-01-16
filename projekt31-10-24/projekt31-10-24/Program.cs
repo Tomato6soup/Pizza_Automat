@@ -12,11 +12,12 @@ namespace projekt31_10_24
         {
             Automat automat = new Automat();
             bool exit = false;
-
+           
             while (!exit)
             {
+           
                 automat.WyswietlMenu();
-                Console.Write("Wybierz opcję: ");
+                Console.Write("\n===== $ Wybierz opcję: ");
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -28,21 +29,25 @@ namespace projekt31_10_24
                         automat.ZamowPizze();
                         break;
                     case "3":
-                        automat.WyswietlKlientow();
+                        automat.SpecialDodatek();
+                        Console.Write("\n===== ");
                         break;
                     case "4":
-                        automat.WyswietlDodatki();
+                        automat.WyswietlKlientow();
                         break;
                     case "5":
-                        automat.WyswietlSkladniki();
+                        automat.WyswietlDodatki();
                         break;
                     case "6":
-                        automat.WyswietlHistorieZamowien();
+                        automat.WyswietlSkladniki();
                         break;
                     case "7":
-                        automat.WyswietlStatystykiZamowien();
+                        automat.WyswietlHistorieZamowien();
                         break;
                     case "8":
+                        automat.WyswietlStatystykiZamowien();
+                        break;
+                    case "9":
                         exit = true;
                         break;
                     default:
