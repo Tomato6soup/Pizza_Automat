@@ -2,150 +2,135 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 // scalic dwie klasy w jeden - Automat(opcja zamow pizze, ilosc pizz, czas przygotowania, historia zamowien)
 namespace projekt31_10_24
 {
     public class Automat
-    
     {
-        private Dodatki dodatki = new Dodatki(); // Instancja klasy Dodatki
+        private readonly List<Klient> klienci = Klient.WczytajKlientow();
+        private readonly List<Pizza> historiaZamowien = new List<Pizza>();
+        private readonly List<Pizza> pizze = Pizza.WczytajPizzeZPliku();
+        private readonly Dodatki dodatki = new Dodatki();
+        private readonly Skladniki skladniki = new Skladniki();
 
-        public bool ZamowDodatek(string nazwa, int ilosc)
+        public void WyswietlMenu()
         {
-            return dodatki.ZamowDodatek(nazwa, ilosc); // Wywołanie metody na instancji
-        }
-        public int IlePizzyZostalo = 10;
-        private Skladniki skladniki = new Skladniki();
-        public List<Zamowienia> zamowienia = new List<Zamowienia>();
-
-        public void WybierzPizze(Pizza pizza)
-        {
-            Console.WriteLine("Wybrana pizza: " + pizza.NazwaPizzy);
-            zamowienia.Add(new Zamowienia { Pizza = pizza});
-            ZrobPizze(pizza);
-        }
-        public void ZrobPizze(Pizza pizza)
-        {
-            Console.WriteLine("Przygotowuję pizzę: " + pizza.NazwaPizzy);
-            IlePizzyZostalo--;
-            Console.WriteLine("Pizza gotowa!");
-            Console.WriteLine();
+            Console.WriteLine("=== MENU ===");
+            Console.WriteLine("1. Dodaj klienta");
+            Console.WriteLine("2. Zamów pizzę");
+            Console.WriteLine("3. Wyświetl listę klientów");
+            Console.WriteLine("4. Wyświetl dostępne dodatki");
+            Console.WriteLine("5. Wyświetl dostępne składniki");
+            Console.WriteLine("6. Wyświetl historię zamówień");
+            Console.WriteLine("7. Wyświetl statystyki zamówień klientów");
+            Console.WriteLine("8. Wyjdź");
         }
 
-        public void PokazDostepneSkladniki()
+        public void DodajKlienta()
         {
-            skladniki.PokazInfo();
+            Console.Write("Podaj imię klienta: ");
+            string imie = Console.ReadLine();
+            Console.Write("Podaj nazwisko klienta: ");
+            string nazwisko = Console.ReadLine();
+            int id = klienci.Count + 1;
+            Klient nowyKlient = new Klient(id, imie, nazwisko);
+            klienci.Add(nowyKlient);
+            Klient.ZapiszKlientow(klienci);
+            Console.WriteLine("Dodano nowego klienta.");
         }
-        //------------Dodano nowe
-        public void PokazHistorieZamowien()
+
+        public void ZamowPizze()
         {
-            Console.WriteLine("Historia zamowien: ");
-            foreach (var zamowienie in zamowienia)
+            Console.Write("Podaj ID klienta: ");
+            if (int.TryParse(Console.ReadLine(), out int klientID))
             {
-                Console.WriteLine("Pizza: " + zamowienie.Pizza.NazwaPizzy);
-            }
-
-        }
-        //-------------------
-        
-    }
-    public class Zamowienia
-
-    {
-        public Pizza Pizza { get; set; }
-        public List<Pizza> pizzas = new List<Pizza>();
-        public string plikSciezka = "pizzy.json";
-
-        public void DodajPizze(Pizza pizza)
-        {
-            pizzas.Add(pizza);
-            ZapiszDoPliku(pizza);
-            Console.WriteLine("Dodano pizzę: " + pizza.NazwaPizzy);
-            //--
-            Console.WriteLine("Data zamowienia: " + DateTime.Now);
-            //--
-        }
-        //LINQ pytania potem bedzie
-        private void ZapiszDoPliku(Pizza pizza)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(plikSciezka, true))
+                Klient klient = klienci.Find(k => k.KlientID == klientID);
+                if (klient != null)
                 {
-                    writer.WriteLine($"Pizza: {pizza.NazwaPizzy}, Cena: {pizza.CenaPizzy} zł, Rozmiar: {pizza.RozmiarPizzy}, Data zamówienia: {DateTime.Now}");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Błąd przy zapisywaniu do pliku: " + e.Message);
-            }
-        }
-        // Metoda odczytująca wszystkie zamówienia z pliku
-        public void WyswietlZapisaneZamowienia()
-        {
-            try
-            {
-                if (File.Exists(plikSciezka))
-                {
-                    Console.WriteLine("Zapisane zamówienia:");
-                    string[] lines = File.ReadAllLines(plikSciezka);
-                    foreach (string line in lines)
+                    Pizza.WyswietlDostepnePizze(pizze);
+                    Console.Write("Wybierz numer pizzy: ");
+                    if (int.TryParse(Console.ReadLine(), out int numer) && numer > 0 && numer <= pizze.Count)
                     {
-                        Console.WriteLine(line);
+                        var wybranaPizza = pizze[numer - 1];
+                        Console.WriteLine($"Zamówiłeś pizzę: {wybranaPizza.NazwaPizzy}");
+
+                        foreach (var skladnik in wybranaPizza.ListaSkladnikow)
+                        {
+                            if (!skladniki.ZuzyjSkladnik(skladnik.Key, skladnik.Value))
+                            {
+                                Console.WriteLine("Brak składników do przygotowania pizzy.");
+                                return;
+                            }
+                        }
+
+                        klient.DodajZamowienie(wybranaPizza, historiaZamowien);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nieprawidłowy wybór.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Brak zapisanych zamówień.");
+                    Console.WriteLine("Nie znaleziono klienta o podanym ID.");
                 }
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("Błąd przy odczycie z pliku: " + e.Message);
-            }
-        }
-        /*
-        // Metoda wyświetlająca liczbę pizz każdego rodzaju
-        public void WyswietlLiczbePizz()
-        {
-            var liczbaPizz = pizzas
-                .GroupBy(p => p.NazwaPizzy)
-                .Select(g => new { Nazwa = g.Key, Ilosc = g.Count() });
-
-            Console.WriteLine("Liczba pizz każdego rodzaju:");
-            foreach (var p in liczbaPizz)
-            {
-                Console.WriteLine($"- {p.Nazwa}: {p.Ilosc}");
+                Console.WriteLine("Nieprawidłowy format ID.");
             }
         }
 
-        // Metoda wyświetlająca średni czas przygotowania każdej pizzy
-        public void WyswietlSredniCzasPrzygotowania()
+        public void WyswietlKlientow()
         {
-            var czasPrzygotowania = pizzas
-                .GroupBy(p => p.NazwaPizzy)
-                .Select(g => new { Nazwa = g.Key, SredniCzas = g.Average(p => p.CzasPrzygotowania()) });
-
-            Console.WriteLine("Średni czas przygotowania każdego rodzaju pizzy:");
-            foreach (var p in czasPrzygotowania)
+            Console.WriteLine("Lista klientów:");
+            foreach (var klient in klienci)
             {
-                Console.WriteLine($"- {p.Nazwa}: {p.SredniCzas} minut");
+                klient.WyswietlInformacje();
             }
         }
-        public void ZapiszZamowieniaDoJson()
+        public void WyswietlSkladniki()
         {
-            string json = JsonConvert.SerializeObject(pizzas, Formatting.Indented);
-            File.WriteAllText("zamowienia.json", json);
+            skladniki.WyswietlSkladniki();
         }
-        */
-        public void WczytajZamowieniaZJson()
+
+        public void WyswietlDodatki()
         {
-            if (File.Exists("zamowienia.json"))
+            dodatki.WyswietlDodatki();
+        }
+        public void WyswietlHistorieZamowien()
+        {
+            Console.WriteLine("Historia zamówień:");
+            foreach (var pizza in historiaZamowien)
             {
-                string json = File.ReadAllText("zamowienia.json");
-                pizzas = JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
+                Console.WriteLine($"- {pizza.NazwaPizzy} za {pizza.CenaPizzy} PLN");
             }
         }
+        public void WyswietlStatystykiZamowien()
+        {
+            if (!historiaZamowien.Any())
+            {
+                Console.WriteLine("Brak zamówień do wyświetlenia.");
+                return;
+            }
 
+            Console.WriteLine("=== Statystyki zamówień klientów ===");
+            var grupyZamowien = historiaZamowien
+                .GroupBy(pizza => pizza.NazwaPizzy)
+                .Select(grupa => new
+                {
+                    RodzajPizzy = grupa.Key,
+                    Ilosc = grupa.Count()
+                })
+                .OrderByDescending(stat => stat.Ilosc);
 
+            foreach (var statystyka in grupyZamowien)
+            {
+                Console.WriteLine($"- {statystyka.RodzajPizzy}: {statystyka.Ilosc} szt.");
+            }
+        }
     }
+
+
+}

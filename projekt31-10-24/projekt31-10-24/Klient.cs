@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System.IO;
 namespace projekt31_10_24
 {
-    
     public class Klient
     {
         public int KlientID { get; set; }
@@ -20,12 +19,13 @@ namespace projekt31_10_24
 
         public static List<Klient> WczytajKlientow()
         {
-           // string sciezka = Config.PobierzSciezke("klienci.json");
-            if (File.Exists("klienci.json"))
+            string sciezka = "klienci.json";
+            if (File.Exists(sciezka))
             {
-                string json = File.ReadAllText("klienci.json");
+                string json = File.ReadAllText(sciezka);
                 return JsonConvert.DeserializeObject<List<Klient>>(json) ?? new List<Klient>();
             }
+
             return new List<Klient>();
         }
 
@@ -40,10 +40,11 @@ namespace projekt31_10_24
             Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}");
         }
 
-        public void DodajZamowienie(Zamowienia zamowienia, Pizza pizza) 
+        public void DodajZamowienie(Pizza pizza, List<Pizza> historiaZamowien)
         {
             Console.WriteLine($"Dodawanie zamówienia dla klienta: {Imie} {Nazwisko}");
-            zamowienia.DodajPizze(pizza);
+            historiaZamowien.Add(pizza);
+            Console.WriteLine($"Zamówiono pizzę: {pizza.NazwaPizzy} za {pizza.CenaPizzy} PLN");
         }
     }
 

@@ -6,39 +6,36 @@ namespace projekt31_10_24
 {
     public class Pizza
     {
-       //W tej klasie wyswietla sie listy z pizz, wyswietla pizzy, cene, ich skladnikow
+        public string NazwaPizzy { get; set; }
+        public double CenaPizzy { get; set; }
+        public string RozmiarPizzy { get; set; }
+        public Dictionary<string, int> ListaSkladnikow { get; set; }
 
-        // Wczytywanie pizz z pliku zamowienia.json
         public static List<Pizza> WczytajPizzeZPliku()
         {
-            string sciezkaPliku = "pizzy.json"; // Ścieżka do pliku
-            if (File.Exists(sciezkaPliku))
+            string sciezka = "pizzy.json";
+            if (File.Exists(sciezka))
             {
-                string json = File.ReadAllText(sciezkaPliku);
+                string json = File.ReadAllText(sciezka);
                 return JsonConvert.DeserializeObject<List<Pizza>>(json) ?? new List<Pizza>();
             }
-            else
-            {
-                Console.WriteLine($"Plik {sciezkaPliku} nie istnieje.");
-                return new List<Pizza>();
-            }
+
+            Console.WriteLine($"Plik {sciezka} nie istnieje.");
+            return new List<Pizza>();
         }
 
-        // Wyświetlanie listy pizz
         public static void WyswietlDostepnePizze(List<Pizza> pizze)
         {
             Console.WriteLine("Dostępne pizze:");
-            for (int i = 0; i < pizze.Count; i++)
+            foreach (var pizza in pizze)
             {
-                Console.WriteLine($"{i + 1}. {pizze[i].NazwaPizzy} - {pizze[i].CenaPizzy} PLN");
-                Console.WriteLine($"   Rozmiar: {pizze[i].RozmiarPizzy}");
-                Console.WriteLine($"   Składniki: {string.Join(", ", pizze[i].ListaSkladnikow)}");
+                Console.WriteLine($"{pizza.NazwaPizzy} - {pizza.CenaPizzy} PLN");
+                Console.WriteLine($"   Rozmiar: {pizza.RozmiarPizzy}");
+                Console.WriteLine($"   Składniki: {string.Join(", ", pizza.ListaSkladnikow.Keys)}");
             }
         }
-
-     
-        }
     }
+}
 
 
 
