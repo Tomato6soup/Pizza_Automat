@@ -1,1 +1,81 @@
-[]
+[
+  {
+    "NazwaPizzy": "6. Capricciosa",
+    "CenaPizzy": 27.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 130,
+      "Pomidory": 100,
+      "Szynka": 110,
+      "Pieczarki": 80
+    }
+  },
+  {
+    "NazwaPizzy": "7. Quattro Formaggi",
+    "CenaPizzy": 32.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Gorgonzola": 50,
+      "Parmezan": 50,
+      "Ricotta": 50
+    }
+  },
+  {
+    "NazwaPizzy": "9. Frutti di Mare",
+    "CenaPizzy": 35.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 120,
+      "Pomidory": 100,
+      "Krewetki": 70,
+      "Malze": 70,
+      "Oliwki": 50
+    }
+  },
+  {
+    "NazwaPizzy": "10. Polska",
+    "CenaPizzy": 30.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 90,
+      "Ketchup": 50,
+      "Kielbasa": 100,
+      "Ogorki kiszone": 60
+    }
+  },
+  {
+    "NazwaPizzy": "2. Hawai",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 80,
+      "Ketchup": 50,
+      "Ananas": 70
+    }
+  },
+  {
+    "NazwaPizzy": "3. Meat lover",
+    "CenaPizzy": 30.0,
+    "RozmiarPizzy": "L",
+    "ListaSkladnikow": {
+      "Mozzarella": 150,
+      "Pomidory": 100,
+      "Ketchup": 60,
+      "Kielbasa": 120,
+      "Boczek": 100
+    }
+  },
+  {
+    "NazwaPizzy": "1. Margaryta",
+    "CenaPizzy": 20.0,
+    "RozmiarPizzy": "M",
+    "ListaSkladnikow": {
+      "Mozzarella": 100,
+      "Pomidory": 80,
+      "Ketchup": 50
+    }
+  }
+]

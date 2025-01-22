@@ -9,7 +9,7 @@ namespace projekt31_10_24
         public int KlientID { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
-        public double SumaZamowien { get; set; } // Dodano pole do przechowywania sumy zamówień
+        public double SumaZamowien { get; set; } 
 
         public Klient(int klientID, string imie, string nazwisko)
         {
@@ -39,14 +39,18 @@ namespace projekt31_10_24
 
         public void WyswietlInformacje()
         {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine($"ID: {KlientID}, Imię: {Imie}, Nazwisko: {Nazwisko}, Suma zamówień: {SumaZamowien} PLN");
+            Console.ResetColor();
         }
 
         public void DodajZamowienie(Pizza pizza, List<Pizza> historiaZamowien)
         {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"Dodawanie zamówienia dla klienta: {Imie} {Nazwisko}");
             historiaZamowien.Add(pizza);
             Console.WriteLine($"Zamówiono pizzę: {pizza.NazwaPizzy} za {pizza.CenaPizzy} PLN");
+            Console.ResetColor();
         }
     }
 

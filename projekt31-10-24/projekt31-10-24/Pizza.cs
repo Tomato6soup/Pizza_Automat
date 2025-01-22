@@ -13,7 +13,7 @@ namespace projekt31_10_24
 
         public static List<Pizza> WczytajPizzeZPliku()
         {
-            string sciezkaPliku = "pizzy.json";
+            string sciezkaPliku = Config.PobierzSciezke("Pizze");
             if (File.Exists(sciezkaPliku))
             {
                 try
@@ -40,6 +40,7 @@ namespace projekt31_10_24
 
         public static void WyswietlDostepnePizze(List<Pizza> pizze)
         {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Dostępne pizze:");
             foreach (var pizza in pizze)
             {
@@ -47,6 +48,7 @@ namespace projekt31_10_24
                 Console.WriteLine($"   Rozmiar: {pizza.RozmiarPizzy}");
                 Console.WriteLine($"   Składniki: {string.Join(", ", pizza.ListaSkladnikow.Keys)}");
             }
+            Console.ResetColor();
         }
     }
 }

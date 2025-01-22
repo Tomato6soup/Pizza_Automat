@@ -19,7 +19,7 @@ namespace projekt31_10_24
 
         private void WczytajSkladnikiZJson()
         {
-            string sciezka = "skladniki.json";
+            string sciezka = Config.PobierzSciezke("Skladniki");
             if (File.Exists(sciezka))
             {
                 string json = File.ReadAllText(sciezka);
@@ -28,16 +28,46 @@ namespace projekt31_10_24
             else
             {
                 Console.WriteLine($"Plik {sciezka} nie istnieje.");
+                ZapiszSkladnikiDoJson();
             }
         }
 
         public void WyswietlSkladniki()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Dostępne składniki:");
             foreach (var skladnik in ListaSkladnikow)
             {
                 Console.WriteLine($"- {skladnik.Key}: {skladnik.Value}g");
+                if (skladnik.Value < 100) // Ostrzeżenie przy niskim stanie
+                {
+                    Console.WriteLine($"UWAGA: Niski stan składnika {skladnik.Key}!");
+                }
             }
+            Console.ResetColor();
+        }
+
+        public void UzupelnijSkladnik(string nazwa, int ilosc)
+        {
+            if (ListaSkladnikow.ContainsKey(nazwa))
+            {
+                ListaSkladnikow[nazwa] += ilosc;
+                //ZapiszSkladnikiDoJson();
+               // Console.WriteLine($"Uzupełniono składnik {nazwa} o {ilosc} jednostek. Nowy stan: {ListaSkladnikow[nazwa]}.");
+            }
+            else
+            {
+                ListaSkladnikow[nazwa] = ilosc;
+               // Console.WriteLine($"Składnik {nazwa} nie istnieje.");
+            }
+            ZapiszSkladnikiDoJson();
+            Console.WriteLine($"Uzupełniono składnik {nazwa} o {ilosc} jednostek. Nowy stan: {ListaSkladnikow[nazwa]}.");
+        }
+
+        private void ZapiszSkladnikiDoJson()
+        {
+            string sciezka = Config.PobierzSciezke("Skladniki");
+            File.WriteAllText(sciezka, JsonConvert.SerializeObject(ListaSkladnikow, Formatting.Indented));
         }
 
         public bool ZuzyjSkladnik(string nazwa, int ilosc)
@@ -45,6 +75,7 @@ namespace projekt31_10_24
             if (ListaSkladnikow.ContainsKey(nazwa) && ListaSkladnikow[nazwa] >= ilosc)
             {
                 ListaSkladnikow[nazwa] -= ilosc;
+                ZapiszSkladnikiDoJson();
                 return true;
             }
 

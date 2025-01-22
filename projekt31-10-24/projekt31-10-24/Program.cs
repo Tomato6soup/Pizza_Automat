@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Text;
 
 namespace projekt31_10_24
 {
@@ -10,14 +11,22 @@ namespace projekt31_10_24
     {
         public static void Main(string[] args)
         {
+            // Wczytanie konfiguracji plików
+            Config.WczytajKonfiguracje();
+           
             Automat automat = new Automat();
             bool exit = false;
-           
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("========== Pizza Automat ==========");
+            Console.ResetColor();
+
             while (!exit)
             {
            
                 automat.WyswietlMenu();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("\n===== $ Wybierz opcję: ");
+                Console.ResetColor();
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -29,8 +38,7 @@ namespace projekt31_10_24
                         automat.ZamowPizze();
                         break;
                     case "3":
-                        automat.SpecialDodatek();
-                        Console.Write("\n===== ");
+                        Console.WriteLine("\n (* - _ - *) Hellou World");
                         break;
                     case "4":
                         automat.WyswietlKlientow();
@@ -48,10 +56,18 @@ namespace projekt31_10_24
                         automat.WyswietlStatystykiZamowien();
                         break;
                     case "9":
+                        automat.UzupelnijZasoby();
+                        break;
+                    case "10":
+                        automat.WyswietlSumaryczneZuzycie();
+                        break; ;
+                    case "11":
                         exit = true;
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Nieprawidłowa opcja.");
+                        Console.ResetColor();
                         break;
                 }
             }
