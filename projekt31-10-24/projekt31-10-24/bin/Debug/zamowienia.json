@@ -77,5 +77,16 @@
       "Pomidory": 80,
       "Ketchup": 50
     }
+  },
+  {
+    "NazwaPizzy": "4. Vege",
+    "CenaPizzy": 25.0,
+    "RozmiarPizzy": "S",
+    "ListaSkladnikow": {
+      "Pomidory": 70,
+      "Ketchup": 50,
+      "Bazylia": 30,
+      "Cukinia": 50
+    }
   }
 ]

@@ -1,22 +1,22 @@
 {
   "Frytki": {
     "Ilosc": 400.0,
-    "CenaZaJednostke": 0.4
+    "CenaZaJednostke": 0.04
   },
   "Salatka": {
-    "Ilosc": 2000.0,
-    "CenaZaJednostke": 0.2
+    "Ilosc": 266.0,
+    "CenaZaJednostke": 0.02
   },
   "Sok": {
-    "Ilosc": 1766.0,
-    "CenaZaJednostke": 0.3
+    "Ilosc": 1466.0,
+    "CenaZaJednostke": 0.03
   },
   "Cola": {
     "Ilosc": 2000.0,
-    "CenaZaJednostke": 0.25
+    "CenaZaJednostke": 0.025
   },
   "Woda": {
-    "Ilosc": 2000.0,
-    "CenaZaJednostke": 0.15
+    "Ilosc": 0.0,
+    "CenaZaJednostke": 0.015
   }
 }

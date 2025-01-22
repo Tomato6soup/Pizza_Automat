@@ -3,6 +3,12 @@
     "KlientID": 1,
     "Imie": "Test",
     "Nazwisko": "Drive",
-    "SumaZamowien": 0.0
+    "SumaZamowien": 437.68
+  },
+  {
+    "KlientID": 2,
+    "Imie": "Hejo",
+    "Nazwisko": "Baki",
+    "SumaZamowien": 37.0
   }
 ]
